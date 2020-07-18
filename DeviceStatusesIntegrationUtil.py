@@ -2,8 +2,10 @@ import requests
 import json
 import base64
 import datetime
-from datetime import datetime, timezone
+from datetime import datetime
 import time
+import pytz
+import os
 
 
 class TrashtechApi:
@@ -27,29 +29,18 @@ class TrashtechApi:
 
         response = requests.post(url, json=request_json)
         json = response.json()
-
+        print(json)
         return json
 
 
 trashtechApi = TrashtechApi()
 
-i = 1
-imageIndex = 1
 
+while True:
 
-while(True):
+    dirName = './Resources/P3Tworzywo/'
+    for filename in os.listdir(dirName):
 
-    trashtechApi.create_status("000006", './Resources/P3Tworzywo/' + str(imageIndex) + '.jpg', str(datetime.now(timezone.utc)))
+        trashtechApi.create_status("000006", dirName + filename, datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
 
-    time.sleep(3600)
-
-    i = i + 1
-    imageIndex = i
-
-    if i > 9:
-      imageIndex = 9
-
-    if i > 11:
-      i = 1
-      imageIndex = 1
-
+        time.sleep(3600)
