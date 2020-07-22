@@ -1,5 +1,5 @@
 import requests
-
+import json
 
 class TrashtechApi:
     api_base = 'http://trashtech.herokuapp.com/api'
@@ -17,7 +17,9 @@ class TrashtechApi:
         }
 
         url = "%s/device_statuses/" % (self.api_base)
-
-        response = requests.post(url, json=request_json)
-        json = response.json()
-        return json
+        requestBody =  json.dumps(request_json)
+	headers = {'content-type': 'application/json'}
+        
+	response = requests.post(url, data=requestBody, headers=headers)
+        jsonResult = response
+        return jsonResult
