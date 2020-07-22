@@ -1,0 +1,10 @@
+{
+  "ContainerMaps": [
+    {
+      "FtpDirectory" : "/",
+      "ContainerIdentifierNumber": "000006",
+      "ContainerReferenceCode" : "000006",
+      "ContainerFtpIdentifier": "0001"
+    }
+  ]
+}

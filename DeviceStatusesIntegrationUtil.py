@@ -1,11 +1,8 @@
-import requests
-import json
-import base64
-import datetime
 from datetime import datetime
 import time
-import pytz
 import os
+import requests
+import base64
 
 
 class TrashtechApi:
@@ -35,12 +32,10 @@ class TrashtechApi:
 
 trashtechApi = TrashtechApi()
 
-
 while True:
 
     dirName = './Resources/P3Tworzywo/'
     for filename in os.listdir(dirName):
-
         trashtechApi.create_status("000006", dirName + filename, datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
 
-        time.sleep(3600)
+        time.sleep(900)
