@@ -18,8 +18,7 @@ class TrashtechApi:
 
         url = "%s/device_statuses/" % (self.api_base)
         requestBody =  json.dumps(request_json)
-	headers = {'content-type': 'application/json'}
-        
-	response = requests.post(url, data=requestBody, headers=headers)
+        headers = {'content-type': 'application/json'}
+        response = requests.post(url, data=requestBody, headers=headers)
         jsonResult = response
         return jsonResult
