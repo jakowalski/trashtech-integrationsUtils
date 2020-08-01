@@ -114,12 +114,13 @@ class FtpCrawlerWorker:
 
 ftpCrawlerWorker = FtpCrawlerWorker()
 
-if ftpCrawlerWorker.Init():
-    while True:
-        try:
-
+while True:
+    try:
+        if ftpCrawlerWorker.Init():
             ftpCrawlerWorker.Crawl()
             time.sleep(600)
-        except all_errors:
-            print(all_errors)
-            time.sleep(60)
+        else:
+            print("FTP Client initialization failed")
+    except all_errors:
+        print(all_errors)
+        time.sleep(60)
