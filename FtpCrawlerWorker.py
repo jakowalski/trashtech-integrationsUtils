@@ -1,4 +1,3 @@
-
 from ftplib import FTP, all_errors
 from Models.ContainerMap import ContainerMap
 import json
@@ -58,7 +57,6 @@ class FtpCrawlerWorker:
             sortedFileNamesWithoutArchived = self.GetSortedFileNamesSchemaForContainerMap(files, containerMap)
 
             for fileDateRaw in sortedFileNamesWithoutArchived:
-
                 currentFileName = self.ComposeFileNameFromDatePart(fileDateRaw, containerMap)
 
                 print(currentFileName)
@@ -84,12 +82,12 @@ class FtpCrawlerWorker:
         encoded_image = base64.b64encode(bytesStream.getvalue())
 
         response = self.trashtechApi.create_status(containerMap.ContainerReferenceCode,
-                                        encoded_image,
-                                        datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+                                                   encoded_image,
+                                                   datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
 
         return response
 
-    def ComposeFileNameFromDatePart(self,fileDateRaw, containerMap):
+    def ComposeFileNameFromDatePart(self, fileDateRaw, containerMap):
         dateFromTheFileName = datetime.strptime(fileDateRaw, '%m/%d %H:%M')
 
         currentFileName = containerMap.ContainerFtpIdentifier + '_' + str(dateFromTheFileName.month).zfill(
@@ -113,14 +111,15 @@ class FtpCrawlerWorker:
 
         return sortedFileNamesWithoutArchived
 
+
 ftpCrawlerWorker = FtpCrawlerWorker()
 
 if ftpCrawlerWorker.Init():
- while True:
-   try:
-   
-     ftpCrawlerWorker.Crawl()
-     time.sleep(600)
-   except all_errors:
-	print(all_errors)
-	time.sleep(60) 
+    while True:
+        try:
+
+            ftpCrawlerWorker.Crawl()
+            time.sleep(600)
+        except all_errors:
+            print(all_errors)
+            time.sleep(60)
