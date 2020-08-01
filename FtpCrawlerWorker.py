@@ -1,3 +1,4 @@
+
 from ftplib import FTP, all_errors
 from Models.ContainerMap import ContainerMap
 import json
@@ -115,4 +116,11 @@ class FtpCrawlerWorker:
 ftpCrawlerWorker = FtpCrawlerWorker()
 
 if ftpCrawlerWorker.Init():
-    ftpCrawlerWorker.Crawl()
+ while True:
+   try:
+   
+     ftpCrawlerWorker.Crawl()
+     time.sleep(600)
+   except all_errors:
+	print(all_errors)
+	time.sleep(60) 
