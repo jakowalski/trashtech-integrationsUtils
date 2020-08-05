@@ -7,6 +7,9 @@ from TrashtechApi import TrashtechApi
 from io import BytesIO
 import base64
 import time
+import numpy as np
+import cv2
+from PIL import Image
 
 
 class FtpCrawlerWorker:
@@ -79,7 +82,16 @@ class FtpCrawlerWorker:
     def SendFileToApi(self, currentFileName, containerMap):
         bytesStream = BytesIO()
         self.ftpClient.retrbinary('RETR %s' % containerMap.FtpDirectory + currentFileName, bytesStream.write)
-        encoded_image = base64.b64encode(bytesStream.getvalue())
+
+        image = Image.open(bytesStream)
+
+        imageMat = np.asarray(image)
+        imageRotated = cv2.rotate(imageMat, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        imageRotated = cv2.cvtColor(imageRotated, cv2.COLOR_RGB2BGR)
+
+        retval, buffer = cv2.imencode('.jpg', imageRotated)
+
+        encoded_image = base64.b64encode(buffer)
 
         response = self.trashtechApi.create_status(containerMap.ContainerReferenceCode,
                                                    encoded_image,
