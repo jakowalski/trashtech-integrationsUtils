@@ -39,7 +39,7 @@ class FtpCrawlerWorker:
         self.trashtechApi = TrashtechApi()
 
         try:
-            self.ftpClient = FTP('66.220.9.51')
+            self.ftpClient = FTP('66.220.9.50')
             self.ftpClient.login('trashtechdevice', '!TrashtechDevice1234')
         except all_errors:
             print(
@@ -69,6 +69,9 @@ class FtpCrawlerWorker:
                 except:
                    print(sys.exc_info()[0])
                    print('Error send to api')
+                   self.ftpClient.close()
+
+                   return
 
                 self.ArchiveFile(containerMap.FtpDirectory + currentFileName,
                                  containerMap.FtpDirectory + 'ARCHIVED_' + currentFileName)
@@ -90,7 +93,6 @@ class FtpCrawlerWorker:
         imageMat = np.asarray(image)
         imageRotated = cv2.rotate(imageMat, cv2.ROTATE_90_COUNTERCLOCKWISE)
         imageRotated = cv2.cvtColor(imageRotated, cv2.COLOR_RGB2BGR)
-
         retval, buffer = cv2.imencode('.jpg', imageRotated)
 
         encoded_image = base64.b64encode(buffer)
