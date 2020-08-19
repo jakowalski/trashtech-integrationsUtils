@@ -8,8 +8,8 @@
     },
     {
       "FtpDirectory": "/",
-      "ContainerIdentifierNumber": "KontenerTestowy2",
-      "ContainerReferenceCode" : "KontenerTestowy2",
+      "ContainerIdentifierNumber": "KontenerTestowy3",
+      "ContainerReferenceCode" : "KontenerTestowy3",
       "ContainerFtpIdentifier": "0002"
     }
   ]

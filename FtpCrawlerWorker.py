@@ -10,7 +10,7 @@ import time
 import numpy as np
 import cv2
 from PIL import Image
-
+import sys
 
 class FtpCrawlerWorker:
     configFilePath = "./Resources/ContainerMapConfig.json"
@@ -63,10 +63,12 @@ class FtpCrawlerWorker:
                 currentFileName = self.ComposeFileNameFromDatePart(fileDateRaw, containerMap)
 
                 print(currentFileName)
-
-                respone = self.SendFileToApi(currentFileName, containerMap)
-
-                print('Response from api is %s' % str(respone))
+                try:
+                   respone = self.SendFileToApi(currentFileName, containerMap)
+                   print('Response from api is %s' % str(respone))
+                except:
+                   print(sys.exc_info()[0])
+                   print('Error send to api')
 
                 self.ArchiveFile(containerMap.FtpDirectory + currentFileName,
                                  containerMap.FtpDirectory + 'ARCHIVED_' + currentFileName)
