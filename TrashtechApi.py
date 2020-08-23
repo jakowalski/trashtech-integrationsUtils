@@ -2,7 +2,7 @@ import requests
 import json
 
 class TrashtechApi:
-    api_base = 'http://trashtech.herokuapp.com/api'
+    api_base = 'https://trashtech-core-staging.herokuapp.com/api'
 
     def create_status(self, device_reference,encoded_image, image_created_at):
 
