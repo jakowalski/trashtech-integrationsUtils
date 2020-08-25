@@ -12,6 +12,7 @@ import cv2
 from PIL import Image
 import sys
 
+
 class FtpCrawlerWorker:
     configFilePath = "./Resources/ContainerMapConfig.json"
 
@@ -64,14 +65,18 @@ class FtpCrawlerWorker:
 
                 print(currentFileName)
                 try:
-                   respone = self.SendFileToApi(currentFileName, containerMap)
-                   print('Response from api is %s' % str(respone))
+                    respone = self.SendFileToApi(currentFileName, containerMap)
+                    print('Response from api is %s' % str(respone))
                 except:
-                   print(sys.exc_info()[0])
-                   print('Error send to api')
-                   self.ftpClient.close()
+                    error = sys.exc_info()[0]
+                    print(error)
+                    if type(error) == type:
+                        self.ftpClient.delete(containerMap.FtpDirectory + currentFileName)
+                        print('File was deleted. File name was %s' %containerMap.FtpDirectory + currentFileName)
+                    print('Error send to api')
+                    self.ftpClient.close()
 
-                   return
+                    return
 
                 self.ArchiveFile(containerMap.FtpDirectory + currentFileName,
                                  containerMap.FtpDirectory + 'ARCHIVED_' + currentFileName)
